@@ -21,6 +21,7 @@ public class MainView extends JFrame {
     JButton reverseBtn = new JButton("预定");
     JButton menuBtn = new JButton("菜单管理");
     JButton billBtn = new JButton("账单查看");
+    JButton userBtn = new JButton("员工管理");
     JTextField searchTxt = new JTextField(15);
     JButton searchBtn = new JButton("查询");
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -33,7 +34,7 @@ public class MainView extends JFrame {
     private int countSum = 0;
     MainViewHandler mainViewHandler;
 
-    public MainView() {
+    public MainView(boolean result) {
         super("主界面-农家乐饭店管理系统");
         URL resource = LoginView.class.getClassLoader().getResource("1.png");
         Image image = new ImageIcon(resource).getImage();
@@ -42,7 +43,7 @@ public class MainView extends JFrame {
         Rectangle bounds = DimensionUtil.getBounds();
         pageSize = Math.floorDiv(bounds.height, 58);
         Container contentPane = getContentPane();
-        layOutNorth(contentPane);
+        layOutNorth(contentPane, result);
         layOutSouth(contentPane);
         layOutCenter(contentPane);
         setBounds(bounds);
@@ -111,7 +112,7 @@ public class MainView extends JFrame {
         }
     }
 
-    private void layOutNorth(Container contentPane) {
+    private void layOutNorth(Container contentPane, boolean result) {
         Font BtnFont = new Font("楷体", Font.PLAIN, 25);
         reverseBtn.setFont(BtnFont);
         payBtn.setFont(BtnFont);
@@ -119,6 +120,7 @@ public class MainView extends JFrame {
         menuBtn.setFont(BtnFont);
         billBtn.setFont(BtnFont);
         searchBtn.setFont(BtnFont);
+        userBtn.setFont(BtnFont);
         searchTxt.setPreferredSize(new Dimension(400, 40));
         searchTxt.setFont(new Font("楷体", Font.PLAIN, 20));
         reverseBtn.addActionListener(mainViewHandler);
@@ -127,11 +129,15 @@ public class MainView extends JFrame {
         menuBtn.addActionListener(mainViewHandler);
         billBtn.addActionListener(mainViewHandler);
         searchBtn.addActionListener(mainViewHandler);
+        userBtn.addActionListener(mainViewHandler);
         northPanel.add(reverseBtn);
         northPanel.add(orderBtn);
         northPanel.add(payBtn);
         northPanel.add(menuBtn);
         northPanel.add(billBtn);
+        if (result) {
+            northPanel.add(userBtn);
+        }
         northPanel.add(searchTxt);
         northPanel.add(searchBtn);
         northPanel.setPreferredSize(new Dimension(0, 50));

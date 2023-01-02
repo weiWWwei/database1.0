@@ -79,6 +79,8 @@ public class MainViewHandler implements ActionListener {
         } else if ("下一页".equals(text)) {
             mainView.setPageNow(mainView.getPageNow() + 1);
             mainView.reloadPreNextTanle();
+        } else if("员工管理".equals(text)){
+            new UserView();
         }
     }
 }

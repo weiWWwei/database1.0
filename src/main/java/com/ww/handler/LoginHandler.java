@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 public class LoginHandler extends KeyAdapter implements ActionListener {
     private LoginView loginView;
     private EmployeeService employeeService = new EmployeeService();
+
     public LoginHandler(LoginView loginView) {
         this.loginView = loginView;
     }
@@ -22,35 +23,38 @@ public class LoginHandler extends KeyAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        if("重置".equals(text)){
+        if ("重置".equals(text)) {
             loginView.getUserTxt().setText("");
             loginView.getPwdField().setText("");
-        }else if("登录".equals(text)){
+        } else if ("登录".equals(text)) {
             login();
         }
     }
+
     @Override
     public void keyPressed(KeyEvent e) {
-        if(KeyEvent.VK_ENTER == e.getKeyCode()){
+        if (KeyEvent.VK_ENTER == e.getKeyCode()) {
             login();
         }
     }
+
     private void login() {
         String empId = loginView.getUserTxt().getText();
         char[] chars = loginView.getPwdField().getPassword();
-        if(empId == null || "".equals(empId.trim())||
-        chars == null){
-            JOptionPane.showMessageDialog(loginView,"用户名密码必填");
+        if (empId == null || "".equals(empId.trim()) ||
+                chars == null) {
+            JOptionPane.showMessageDialog(loginView, "用户名密码必填");
             return;
         }
         String pwd = new String(chars);
         Employee employee = employeeService.getEmployeeByIdAndPwd(empId, pwd);
-        if(employee!=null){
+        boolean result = "经理".equals(employee.getJob());
+        if (employee != null) {
             //跳转主界面
-            new MainView();
+            new MainView(result);
             loginView.dispose();
-        }else {
-            JOptionPane.showMessageDialog(loginView,"用户名密码错误");
+        } else {
+            JOptionPane.showMessageDialog(loginView, "用户名密码错误");
         }
     }
 }

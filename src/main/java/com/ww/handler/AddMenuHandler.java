@@ -25,6 +25,7 @@ public class AddMenuHandler implements ActionListener {
             if(value == JOptionPane.YES_OPTION){
                 boolean result = addMenuView.addMenu();
                 if(result){
+                    JOptionPane.showMessageDialog(addMenuView,"添加成功！");
                     menuView.reloadSearchTanle();
                     addMenuView.dispose();
                 }else{
